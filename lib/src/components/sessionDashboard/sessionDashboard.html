@@ -9,7 +9,7 @@
         <h2 *ngIf="inProgress()" class="subtitle">{{heroAuthor()}}</h2>
 
         <p *ngFor="let option of heroPollOptions()"><span class="option-result"><b>{{heroOptionResult(option)}}%</b></span> {{option}}</p>
-        
+
         <br>
 
         <progress *ngIf="inProgress() && hero != null && !isItemCovered(hero)" class="progress is-extra-small" value="{{heroTimeProgress}}" max="100">{{heroTimeProgress}}%</progress>
@@ -37,11 +37,17 @@
                 <span>Begin Session</span>
               </a>
             </li>
-            <li *ngIf="started()">
-              <a class="nav-item" (click)="endSession()">
+            <li *ngIf="started() && !isConfirmingEnd">
+              <a class="nav-item" (click)="promptForSessionEnd()">
                 <span class="icon"><i class="fa fa-stop-circle-o"></i></span>
                 <span>End Session</span>
               </a>
+            </li>
+            <li *ngIf="isConfirmingEnd">
+              <div class="notification is-overlay	" (click)="endSession()">
+                <span class="icon has-text-warning"><i class="fa fa-exclamation"></i></span>
+                <span class="has-text-weight-bold">Click to confirm</span>
+              </div>
             </li>
           </ul>
           <ul *ngIf="completed()">

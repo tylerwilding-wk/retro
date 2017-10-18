@@ -42,6 +42,8 @@ class SessionDashboardComponent implements OnInit, OnDestroy {
 
   bool ticking = false;
 
+  bool isConfirmingEnd = false;
+
   SessionDashboardComponent(
       StoreService storeService, this._routeParams, this._router)
       : _store = storeService.store;
@@ -206,6 +208,10 @@ class SessionDashboardComponent implements OnInit, OnDestroy {
     _store.actions.showModal(CREATE_ITEM_MODAL);
   }
 
+  promptForSessionEnd() {
+    isConfirmingEnd = true;
+  }
+
   Item get hero => _store.state.hero;
 
   String heroText() => hero?.text ?? "";
@@ -261,6 +267,7 @@ class SessionDashboardComponent implements OnInit, OnDestroy {
   }
 
   void endSession() {
+    isConfirmingEnd = false;
     present(null);
     _store.actions.sessions.end(null);
   }
