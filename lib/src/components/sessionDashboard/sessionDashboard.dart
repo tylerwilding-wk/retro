@@ -1,5 +1,6 @@
 import 'dart:html';
 import 'dart:math';
+import 'dart:async';
 
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
@@ -43,6 +44,7 @@ class SessionDashboardComponent implements OnInit, OnDestroy {
   bool ticking = false;
 
   bool isConfirmingEnd = false;
+  double confirmEndSessionTimeout = 100.0;
 
   SessionDashboardComponent(
       StoreService storeService, this._routeParams, this._router)
@@ -210,6 +212,16 @@ class SessionDashboardComponent implements OnInit, OnDestroy {
 
   promptForSessionEnd() {
     isConfirmingEnd = true;
+    Timer timeout;
+    print("test");
+    timeout = new Timer.periodic(new Duration(milliseconds: 50), (_) {
+      confirmEndSessionTimeout -= 1;
+      if (confirmEndSessionTimeout == 0) {
+        isConfirmingEnd = false;
+        confirmEndSessionTimeout = 100.0;
+        timeout.cancel();
+      }
+    });
   }
 
   Item get hero => _store.state.hero;

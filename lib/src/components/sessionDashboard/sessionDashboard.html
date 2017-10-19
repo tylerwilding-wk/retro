@@ -44,10 +44,19 @@
               </a>
             </li>
             <li *ngIf="isConfirmingEnd">
-              <div class="notification is-overlay	" (click)="endSession()">
-                <span class="icon has-text-warning"><i class="fa fa-exclamation"></i></span>
-                <span class="has-text-weight-bold">Click to confirm</span>
-              </div>
+              <a class="nav-item animated slideInUp" (click)="endSession()">
+                <span class="columns is-gapless is-multiline is-mobile">
+                  <!-- <span class="column is-narrow">
+                    <span class="icon has-text-warning"><i class="fa fa-exclamation"></i></span>
+                  </span> -->
+                  <span class="column">
+                    <span class="has-text-weight-bold">Click to confirm</span>
+                  </span>
+                  <span class="column is-12">
+                    <progress class="progress is-extra-small" value="{{confirmEndSessionTimeout}}" max="100">{{confirmEndSessionTimeout}}%</progress>
+                  </span>
+                </span>
+              </a>
             </li>
           </ul>
           <ul *ngIf="completed()">
